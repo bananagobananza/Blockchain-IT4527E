@@ -5,7 +5,7 @@ contract Group7Token {
     string public name = "Group 7";
     string public symbol = "GRP7";
     uint8 public decimals = 18;
-    uint256 public totalSupply;
+    uint256 public _totalSupply;
 
     mapping(address => uint256) private balances;
     mapping(address => mapping(address => uint256)) private allowances;
@@ -31,12 +31,16 @@ contract Group7Token {
 
     constructor(uint256 _initialSupply) {
         owner = msg.sender;
-        totalSupply = _initialSupply * (10 ** decimals);
-        balances[owner] = totalSupply;
+        _totalSupply = _initialSupply * (10 ** decimals);
+        balances[owner] = _totalSupply;
         saleStartTime = block.timestamp;
 
         // ERC-20 mint event
-        emit Transfer(address(0), owner, totalSupply);
+        emit Transfer(address(0), owner, _totalSupply);
+    }
+
+    function totalSupply() public view returns (uint256) {
+        return _totalSupply;
     }
 
     function balanceOf(address account) external view returns (uint256) {
@@ -79,7 +83,7 @@ contract Group7Token {
     function buyTokens() public payable {
         require(block.timestamp <= saleStartTime + SALE_DURATION, "Sale ended");
 
-        uint256 maxSale = (totalSupply * MAX_SALE_PERCENT) / 100;
+        uint256 maxSale = (_totalSupply * MAX_SALE_PERCENT) / 100;
         require(totalSold < maxSale, "All tokens sold");
 
         // Determine price tier
