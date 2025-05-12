@@ -12,8 +12,8 @@ contract Group7Token {
 
     address public owner;
     uint256 public constant MAX_SALE_PERCENT = 50;
-    uint256 public constant PRICE_TIER1 = 0.1 ether;
-    uint256 public constant PRICE_TIER2 = 0.2 ether;
+    uint256 public constant PRICE_TIER1 = 5 ether;
+    uint256 public constant PRICE_TIER2 = 10 ether;
     uint256 public immutable saleStartTime;
     uint256 public constant SALE_DURATION = 30 days;
 
